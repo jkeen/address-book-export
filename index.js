@@ -133,11 +133,11 @@ function addPostalAddress(row) {
 
 function addName(row) {
   names[row.id] = compactObject({
-    first:          row.first_name,
-    middle:         row.middle_name,
-    last:           row.last_name,
-    organization:   row.organization,
-    is_me:          !!row.is_me
+    first_name:          row.first_name,
+    middle_name:         row.middle_name,
+    last_name:           row.last_name,
+    organization:        row.organization,
+    is_me:               !!row.is_me
   });
 }
 
@@ -157,9 +157,8 @@ function buildPayload() {
     return !_.isEmpty(d);
   };
 
-  for (var i = 0; i < ids.length; i++) {
+  for (var i = 0; i <= ids.length; i++) {
     var id = ids[i];
-
     var contact =  _.pickBy(names[id], _.isString);
 
     if (contact.first_name || contact.last_name || contact.organization) {
