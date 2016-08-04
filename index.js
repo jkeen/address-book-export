@@ -73,12 +73,14 @@ function addEmailAddress(row) {
     emails[row.id] = [];
   }
 
-  var email = {
+  var email = compactObject({
     address: row.email,
     label: fixLabelForDisplay(row.email_label)
-  };
+  });
 
-  emails[row.id].push(email);
+  if (email.address) {
+    emails[row.id].push(email);
+  }
 }
 
 function addMessagingAddress(row) {
@@ -86,12 +88,12 @@ function addMessagingAddress(row) {
     messengers[row.id] = [];
   }
 
-  var messenger = {
+  var messenger = compactObject({
     address: row.messaging_address,
     service: row.messaging_service
-  };
+  });
 
-  if (row.messaging_address) {
+  if (messenger.address) {
     messengers[row.id].push(messenger);
   }
 }
@@ -101,12 +103,12 @@ function addPhone(row) {
     phones[row.id] = [];
   }
 
-  var phone = {
+  var phone = compactObject({
     number: row.phone_number,
-    label:  row.phone_label
-  };
+    label:  fixLabelForDisplay(row.phone_label)
+  });
 
-  if (row.phone_number) {
+  if (phone.number) {
     phones[row.id].push(phone);
   }
 }
@@ -116,27 +118,27 @@ function addPostalAddress(row) {
     addresses[row.id] = [];
   }
 
-  var address = {
+  var address = compactObject({
     street_address: row.street_address,
     city:           row.city,
     state:          row.state,
     zipcode:        row.zip_code,
     label:          fixLabelForDisplay(row.street_address_label)
-  };
+  });
 
-  if (row.street_address) {
+  if (address.street_address) {
     addresses[row.id].push(address);
   }
 }
 
 function addName(row) {
-  names[row.id] = {
+  names[row.id] = compactObject({
     first:          row.first_name,
     middle:         row.middle_name,
     last:           row.last_name,
     organization:   row.organization,
     is_me:          !!row.is_me
-  };
+  });
 }
 
 function prepareRow(row) {
@@ -151,20 +153,39 @@ function buildPayload() {
   var ids = Object.keys(names);
   contacts = [];
 
+  var remove = function(d) {
+    return !_.isEmpty(d);
+  };
+
   for (var i = 0; i < ids.length; i++) {
     var id = ids[i];
 
-    var contact = names[id];
+    var contact =  _.pickBy(names[id], _.isString);
 
-    contact.messengers = messengers[id];
-    contact.emails     = emails[id];
-    contact.addresses  = addresses[id];
-    contact.phones     = phones[id];
-    contact._id        = id;
-    contacts.push(contact);
+    if (contact.first_name || contact.last_name || contact.organization) {
+      contact.messengers = prepareList(messengers[id]);
+      contact.emails     = prepareList(emails[id]);
+      contact.addresses  = prepareList(addresses[id]);
+      contact.phones     = prepareList(phones[id]);
+      contact._id        = id;
+
+      contacts.push(contact);
+    }
   }
 
   return contacts;
+}
+
+function compactObject(item) {
+  return _.pickBy(item, _.isString);
+}
+
+function prepareList(items) {
+  var cleaned = _.map(items, function(item) {
+    return compactObject(item);
+  });
+
+  return _.uniqWith(items, _.isEqual);
 }
 
 function fetchResults(path, query) {
