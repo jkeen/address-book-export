@@ -1,0 +1,28 @@
+{
+  "name": "address-book-export",
+  "version": "0.0.1",
+  "description": "Exports Mac Address Book into JSON for consumption elsewhere",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "keywords": [
+    "address-book",
+    "export"
+  ],
+  "author": "Jeff Keen",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
+    "mocha": "^3.0.1",
+    "plist": "^1.2.0",
+    "rsvp": "^3.2.1"
+  },
+  "dependencies": {
+    "sqlite3": "^3.1.1",
+    "crypto": "0.0.3",
+    "expand-home-dir": "0.0.2",
+    "lodash": "^4.12.0"
+  }
+}
