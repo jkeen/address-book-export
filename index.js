@@ -136,7 +136,6 @@ function addName(row) {
     middle_name:         row.middle_name,
     last_name:           row.last_name,
     organization:        row.organization,
-    is_me:               !!row.is_me
   });
 
   if (!names[row.id]) {
@@ -144,6 +143,10 @@ function addName(row) {
   }
   else {
     names[row.id] = _.merge(names[row.id], basics);
+  }
+
+  if (row.is_me || names[row.id].is_me) {
+    names[row.id].is_me = true;
   }
 }
 
@@ -158,14 +161,13 @@ function prepareRow(row) {
 function buildPayload() {
   var ids = Object.keys(names);
   contacts = [];
-
   var remove = function(d) {
     return !_.isEmpty(d);
   };
 
   for (var i = 0; i <= ids.length; i++) {
     var id = ids[i];
-    var contact =  _.pickBy(names[id], _.isString);
+    var contact =  _.omitBy(names[id], _.isUndefined);
 
     if (contact.first_name || contact.last_name || contact.organization) {
       contact.messengers = prepareList(messengers[id]);
