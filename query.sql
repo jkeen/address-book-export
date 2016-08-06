@@ -1,5 +1,5 @@
-SELECT list.Z_PK as "id",
-	list.ZUNIQUEID,
+SELECT coalesce(list.ZLINKID, list.Z_PK) as "id",
+	 list.ZUNIQUEID,
    list.ZME as "is_me",
    list.ZFIRSTNAME as "first_name",
    list.ZMIDDLENAME as "middle_name",

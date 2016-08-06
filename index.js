@@ -5,10 +5,9 @@ var _       = require('lodash');
 var fs      = require('fs');
 var path    = require('path');
 
-
 var expandHomeDir  = require('expand-home-dir');
 var QUERY = '' +
-'   SELECT list.ZUNIQUEID as "id", ' +
+'   SELECT coalesce(list.ZLINKID, list.Z_PK) as "id", ' +
 '   list.ZME as "is_me", ' +
 '   list.ZFIRSTNAME as "first_name", ' +
 '   list.ZMIDDLENAME as "middle_name",' +
@@ -132,13 +131,20 @@ function addPostalAddress(row) {
 }
 
 function addName(row) {
-  names[row.id] = compactObject({
+  var basics = compactObject({
     first_name:          row.first_name,
     middle_name:         row.middle_name,
     last_name:           row.last_name,
     organization:        row.organization,
     is_me:               !!row.is_me
   });
+
+  if (!names[row.id]) {
+    names[row.id] = basics;
+  }
+  else {
+    names[row.id] = _.merge(names[row.id], basics);
+  }
 }
 
 function prepareRow(row) {
