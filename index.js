@@ -7,7 +7,7 @@ var path    = require('path');
 
 var expandHomeDir  = require('expand-home-dir');
 var QUERY = '' +
-'   SELECT coalesce(list.ZLINKID, list.Z_PK) as "id", ' +
+'   SELECT coalesce(list.ZLINKID, list.ZUNIQUEID) as "id", ' +
 '   list.ZME as "is_me", ' +
 '   list.ZFIRSTNAME as "first_name", ' +
 '   list.ZMIDDLENAME as "middle_name",' +

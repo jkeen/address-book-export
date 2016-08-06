@@ -1,6 +1,6 @@
 {
   "name": "address-book-export",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Exports Mac Address Book into JSON for consumption elsewhere",
   "main": "index.js",
   "scripts": {

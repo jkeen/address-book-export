@@ -1,4 +1,4 @@
-SELECT coalesce(list.ZLINKID, list.Z_PK) as "id",
+SELECT coalesce(list.ZLINKID, list.ZUNIQUEID) as "id",
 	 list.ZUNIQUEID,
    list.ZME as "is_me",
    list.ZFIRSTNAME as "first_name",
