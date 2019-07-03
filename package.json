@@ -13,16 +13,15 @@
   "author": "Jeff Keen",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.4.1",
-    "chai-as-promised": "^5.1.0",
-    "mocha": "^3.0.1"
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^6.1.4"
   },
   "dependencies": {
-    "crypto": "0.0.3",
-    "expand-home-dir": "0.0.2",
+    "expand-home-dir": "0.0.3",
     "lodash": "^4.12.0",
-    "phone": "^1.0.8",
-    "rsvp": "^3.2.1",
-    "sqlite3": "^3.1.1"
+    "phone": "^2.3.16",
+    "rsvp": "^4.8.5",
+    "sqlite3": "^4.0.9"
   }
 }

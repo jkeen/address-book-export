@@ -1,6 +1,5 @@
 var Sqlite3 = require('sqlite3').verbose();
 var RSVP    = require('rsvp');
-var Crypto  = require('crypto');
 var _       = require('lodash');
 var fs      = require('fs');
 var path    = require('path');
@@ -136,6 +135,7 @@ function addName(row) {
     middle_name:         row.middle_name,
     last_name:           row.last_name,
     organization:        row.organization,
+    is_me:               row.is_me
   });
 
   if (!names[row.id]) {
